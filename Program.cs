@@ -29,9 +29,11 @@ namespace Practica_2_Juego_pastores__prueba_2
                     Console.WriteLine("Opción incorrecta, inserte un valor entre 1 y 3. \n Pulse una tecla para continuar");
                     Console.ReadKey();
                 }
-            } while (!numOpcion || opcion < 1 || opcion > 6);
+            } 
+            while (!numOpcion || opcion < 1 || opcion > 6);
             return opcion;
         }
+        
         static void Escribir_Reglas() //Función para mostrar las reglas
         {
             Console.WriteLine("Las reglas son: ");
@@ -44,6 +46,7 @@ namespace Practica_2_Juego_pastores__prueba_2
                 "De forma que cuando solo quede una ficha, el jugador que tenga que retirarla ha perdido.");
             Console.ReadKey();
         } 
+        
         static int Menu_Personalizacion() //Función para mostrar el menu de personalización
         {
             Console.WriteLine("¿Qué vas a querer personalizar?");
@@ -59,6 +62,7 @@ namespace Practica_2_Juego_pastores__prueba_2
             }
             return eleccion1;
         }
+        
         static void Personalizar_Tablero(int [] tablero,ref int fila, ref int columna)//Función para personalizar el tablero
         {
             bool EleccionFila;
@@ -72,21 +76,26 @@ namespace Practica_2_Juego_pastores__prueba_2
                 Console.WriteLine("Opción incorrecta, inserte un número entre 1 y 50. \n Pulse una tecla para continuar");
                 Console.ReadKey();
             }
+            
             Console.WriteLine("¿Cuántas columnas quieres que haya?(Máximo 50): ");//Pedimos el número de columnas que va a temner el tablero personalizado
             EleccionColumna = int.TryParse(Console.ReadLine(), out columna);
+            
             if (EleccionColumna == false || columna < 1 || columna > 50)
             {
                 Console.WriteLine("Opción incorrecta, inserte un número entre 1 y 50. \n Pulse una tecla para continuar");
                 Console.ReadKey();
             }
+            
             List<int> temp = new List<int>();
             for (int i = 0; i < fila; i++)
             {
                 temp.Add(columna);
             }
+            
             tablero = new int[temp.Count()];
             tablero = temp.ToArray();
         }
+        
         static void Personalizar_Jugadores(ref string jugador1, ref string jugador2)//Función para personalizar el nombre de los jugadores 
         {
             Console.WriteLine("Vamos a cambiar el nombre de los jugadores");
@@ -95,6 +104,7 @@ namespace Practica_2_Juego_pastores__prueba_2
             Console.WriteLine("Elija el nuevo nombre del jugador 2");
             jugador2 = Console.ReadLine();
         }
+        
         static void Dibujar_Tablero(int[] array) //Función para dibujar el tablero con los valores establecidos para filas y columnas. Por defecto será 4x6
         {
             Console.WriteLine(); 
@@ -108,6 +118,7 @@ namespace Practica_2_Juego_pastores__prueba_2
                 Console.WriteLine();
             }
         }
+        
         static int[] TableroDefault(int[] array, int fila,int columnas) //Función para que el tablero se reinicie una vez acabado el programa
         {
             array = new int[fila];
@@ -117,6 +128,7 @@ namespace Practica_2_Juego_pastores__prueba_2
             }
             return array;
         }
+        
         static void PreguntarJugada(int[] tablero) //Función para que el jugador haga una jugada
         {
             int numfila;
@@ -135,7 +147,9 @@ namespace Practica_2_Juego_pastores__prueba_2
                         Console.WriteLine("Opción incorrecta, inserte un número entre 1 y {0}. \n Pulse una tecla para continuar", tablero.Length);
                         Console.ReadKey();
                     }
-                } while (tablero[numfila-1]==0);
+                }
+                while (tablero[numfila-1]==0);
+                
                 do
                 {
                     Console.Write("¿Cuántas fichas quieres eliminar? (1 a {0}) ", tablero[numfila - 1]);
@@ -145,28 +159,35 @@ namespace Practica_2_Juego_pastores__prueba_2
                         Console.WriteLine("Opción incorrecta, inserte un número entre 1 y {0}. \n Pulse una tecla para continuar", tablero[numfila - 1]);
                         Console.ReadKey();
                     }
-                } while ((numColumnas < 1) || (numColumnas > tablero[numfila - 1]));
-            } while (tablero[numfila - 1] == 0);
+                }
+                while ((numColumnas < 1) || (numColumnas > tablero[numfila - 1]));
+            } 
+            while (tablero[numfila - 1] == 0);
+            
             tablero[numfila - 1] -= numColumnas;
         }
+        
         static int FilasLlenasQuedan(int[] tablero) // Función que comprueba que una fila está vacia
         {
             int j = 0;
-            for(int i = 0; i<tablero.Length; i++)
+            
+            for (int i = 0; i<tablero.Length; i++)
             {
                 if (tablero[i] != 0)
                 {
                     j++;
                 }
             }
+            
             return j;
         }
+        
         static void JugadaIA(int[] tablero) //Función  que reliza la jugada de la computadora
         {
             int numfila;
             int numColumnas;
             Random rnd = new Random();
-            if(FilasLlenasQuedan(tablero) >= 1)
+            if (FilasLlenasQuedan(tablero) >= 1)
             {
                 do
                 {
@@ -335,7 +356,7 @@ namespace Practica_2_Juego_pastores__prueba_2
                                 if (terminado)
                                 {
                                     Console.WriteLine("El {0} es el ganador", jugador1);
-                                    foreach(string value in nombresJugadores)
+                                    foreach (string value in nombresJugadores)
                                     {
                                         if (value.Equals(jugador1))
                                         {
@@ -355,17 +376,20 @@ namespace Practica_2_Juego_pastores__prueba_2
                                     
                                 }
                             }
-                        } while (!terminado);
+                        } 
+                        while (!terminado);
+                        
                         Console.WriteLine("FIN DEL JUEGO");
                         int[] temp = TableroDefault(tableroMaximo, filas, columnas);
                         tableroMaximo = new int[filas];
                         Array.Copy(temp, tableroMaximo, temp.Length);
                         Console.ReadKey();
+                        
                         break;
+                        
                     case 4: //Opción para poner en pantalla el highscore
                         Console.WriteLine(HighScore(nombresJugadores, victoriasTotales, derrotasTotales));
                         Console.ReadKey();
-
 
                         break;
 
@@ -380,6 +404,7 @@ namespace Practica_2_Juego_pastores__prueba_2
                             Dibujar_Tablero(tableroMaximo);
                             // Comprobar si ha terminado la partida
                             terminado = Comprobar_Perdedor(tableroMaximo);
+                            
                             if (terminado)
                             {
                                 Console.WriteLine("El Ordenador es el ganador");
@@ -399,12 +424,15 @@ namespace Practica_2_Juego_pastores__prueba_2
                                     Console.WriteLine("El {0} es el ganador", jugador1);
                                 }
                             }
-                        } while (!terminado);
+                        } 
+                        while (!terminado);
+                        
                         Console.WriteLine("FIN DEL JUEGO");
                         int[] temp1 = TableroDefault(tableroMaximo, filas, columnas);
                         tableroMaximo = new int[filas];
                         Array.Copy(temp1, tableroMaximo, temp1.Length);
                         Console.ReadKey();
+                        
                         break;
 
                     case 6: //Opción para finalizar el programa
